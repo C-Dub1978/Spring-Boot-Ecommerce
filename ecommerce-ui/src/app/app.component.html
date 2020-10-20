@@ -1,0 +1,25 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    mode="side"
+    opened
+    class="sidenav-container"
+  >
+    <div class="navigation-list">
+      <mat-toolbar fxLayoutAlign="center center">
+        <img src="/assets/images/nav-logo.png" alt="luv 2 shop logo">
+      </mat-toolbar>
+      <mat-nav-list role="navigation">
+        <a mat-list-item role="listitem" routerLink="/books">Books</a>
+        <a mat-list-item role="listitem" routerLink="/coffeeMugs">Coffee Mugs</a>
+        <a mat-list-item role="listitem" routerLink="/mousePads">Mouse Pads</a>
+        <a mat-list-item role="listitem" routerLink="/luggageTags">Luggage Tags</a>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header></app-header>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
