@@ -1,38 +1,18 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Product Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-  </ng-container>
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Description</th>
-    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
-  </ng-container>
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef>Category</th>
-    <td mat-cell *matCellDef="let element">{{ element.category }}</td>
-  </ng-container>
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef>Price</th>
-    <td mat-cell *matCellDef="let element">{{ element.unitPrice | currency : 'USD' : 'symbol' : '1.0-2' }}</td>
-  </ng-container>
-  <ng-container matColumnDef="available">
-    <th mat-header-cell *matHeaderCellDef>Number Available</th>
-    <td mat-cell *matCellDef="let element">{{ element.unitsInStock }}</td>
-  </ng-container>
-  <ng-container matColumnDef="inStock">
-    <th mat-header-cell *matHeaderCellDef>In Stock?</th>
-    <td mat-cell *matCellDef="let element">{{ element.active ? 'Yes' : 'No' }}</td>
-  </ng-container>
-  <ng-container matColumnDef="sku">
-    <th mat-header-cell *matHeaderCellDef>SKU</th>
-    <td mat-cell *matCellDef="let element">{{ element.sku }}</td>
-  </ng-container>
-  <ng-container matColumnDef="thumbnail">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element">
-      <img src="{{ element.imageUrl }}" alt="product image thumbnail" class="thumbnail" (click)="onImageClick(element.imageUrl)">
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="columns" class="primaryColorBG"></tr>
-  <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-</table>
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+        <div *ngFor="let product of products" class="col-md-3">
+          <div class="product-box">
+            <img src="{{ product.imageUrl }}" alt="{{ product.name }} image" class="img-responsive">
+            <h1>{{ product.name }}</h1>
+            <div class="price">{{ product.unitPrice | currency : 'USD'}}</div>
+            <a href="#">
+              <button class="btn btn-outline-dark">Add to cart</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,32 +15,32 @@ import java.util.Date;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
     // This is the other side of the relation. Since One product category can have many
     // products as seen in the ProductCategory @ManyToOne relation, here we set @ManyToOne
     // and join on the FK column in this table which is categoryId
     @ManyToOne()
-    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private ProductCategory category;
-    @Column(name = "SKU")
+    @Column(name = "sku")
     private String sku;
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
-    @Column(name = "DESCRIPTION")
+    @Column(name = "description")
     private String description;
-    @Column(name = "UNIT_PRICE")
+    @Column(name = "unit_price")
     private BigDecimal unitPrice;
-    @Column(name = "IMAGE_URL")
+    @Column(name = "image_url")
     private String imageUrl;
-    @Column(name = "ACTIVE")
+    @Column(name = "active")
     private boolean active;
-    @Column(name = "UNITS_IN_STOCK")
+    @Column(name = "units_in_stock")
     private int unitsInStock;
-    @Column(name = "DATE_CREATED")
+    @Column(name = "date_created")
     @CreationTimestamp
     private Date dateCreated;
-    @Column(name = "LAST_UPDATED")
+    @Column(name = "last_updated")
     @UpdateTimestamp
     private Date lastUpdated;
 }

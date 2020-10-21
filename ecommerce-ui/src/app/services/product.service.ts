@@ -9,7 +9,7 @@ import {GetResponse} from "../models/get-response.model";
   providedIn: 'root'
 })
 export class ProductService {
-  private API_ENDPOINT = 'http://localhost:8080/api/products';
+  private API_ENDPOINT = 'http://localhost:8080/api/products?size=100';
   private _products$ = new BehaviorSubject<Product[]>([]);
 
   constructor(private httpClient: HttpClient) { this.fetchProductList() }

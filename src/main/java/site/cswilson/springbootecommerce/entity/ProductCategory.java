@@ -16,9 +16,9 @@ import java.util.Set;
 public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "CATEGORY_NAME")
+    @Column(name = "category_name")
     private String categoryName;
     // One category can have many products, this is the JPA relation defined
     // Keep in mind - the mapped by is pointing to the class level name of the field, not the

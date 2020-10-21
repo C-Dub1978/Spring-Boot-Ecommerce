@@ -1,19 +1,5 @@
-.mat-table {
-  width: 100%;
-  overflow-y: scroll;
-}
-
-.mat-header-cell {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.thumbnail {
-  height: 50px;
-  width: 50px;
+.img-responsive {
   object-fit: contain;
-}
-
-.thumbnail:hover {
-  cursor: pointer;
+  height: 150px;
+  max-height: 150px;
 }

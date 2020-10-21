@@ -1,25 +1,68 @@
-<mat-sidenav-container>
-  <mat-sidenav
-    mode="side"
-    opened
-    class="sidenav-container"
-  >
-    <div class="navigation-list">
-      <mat-toolbar fxLayoutAlign="center center">
-        <img src="/assets/images/nav-logo.png" alt="luv 2 shop logo">
-      </mat-toolbar>
-      <mat-nav-list role="navigation">
-        <a mat-list-item role="listitem" routerLink="/books">Books</a>
-        <a mat-list-item role="listitem" routerLink="/coffeeMugs">Coffee Mugs</a>
-        <a mat-list-item role="listitem" routerLink="/mousePads">Mouse Pads</a>
-        <a mat-list-item role="listitem" routerLink="/luggageTags">Luggage Tags</a>
-      </mat-nav-list>
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar d-none d-lg-block">
+  <div class="logo">
+    <a routerLink="#">
+      <img src="assets/images/nav-logo.png" alt="luv2shop" class="img-responsive">
+    </a>
+  </div>
+  <div class="menu-sidebar-content js-scrollbar1">
+    <nav class="navbar-sidebar">
+      <ul class="list-unstyled navbar-list">
+        <li>
+          <a href="#">Books</a>
+        </li>
+        <li>
+          <a href="#">Coffee Mugs</a>
+        </li>
+        <li>
+          <a href="#">Mouse Pads</a>
+        </li>
+        <li>
+          <a href="#">Luggage Tags</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+<!-- END MENU SIDEBAR-->
+
+<!-- PAGE CONTAINER-->
+  <!-- END PAGE CONTAINER -->
+<div class="page-container">
+  <!-- HEADER DESKTOP-->
+  <header class="header-desktop">
+    <div class="section-content section-content-p30">
+      <div class="container-fluid">
+        <div class="header-wrap">
+          <form class="form-header" onsubmit="return false;" method="GET">
+            <input class="au-input au-input-xl" type="text" name="search"
+                   placeholder="Search for data ..." />
+            <button class="au-btn-submit" type="submit">
+              Search
+            </button>
+          </form>
+          <div class="cart-area d-n">
+            <a routerLink="#">
+              <div class="total">19.22 <span> 2</span> </div> <i class="fa fa-shopping-cart"
+                                                                 aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="account-wrap"></div>
+      </div>
     </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-header></app-header>
-    <div class="main-content">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </header>
+  <!-- END HEADER DESKTOP-->
+
+  <!-- MAIN CONTENT -->
+  <app-product-list></app-product-list>
+  <!-- END MAIN CONTENT -->
+  <footer>
+    <ul>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">Help</a></li>
+    </ul>
+  </footer>
+</div>
+

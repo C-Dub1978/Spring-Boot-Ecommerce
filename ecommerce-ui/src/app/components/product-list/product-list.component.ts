@@ -1,9 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {Product} from "../../models/product.model";
-import {map, retry, take, tap} from "rxjs/operators";
 import {Subscription} from "rxjs";
+import {Product} from "../../models/product.model";
 
 @Component({
   selector: 'app-product-list',
@@ -12,30 +10,15 @@ import {Subscription} from "rxjs";
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   productsSub$: Subscription;
-  dataSource: MatTableDataSource<Product>;
-  columns: string[] = [
-    'name',
-    'description',
-    'category',
-    'price',
-    'available',
-    'inStock',
-    'sku',
-    'thumbnail'
-  ];
+  products: Product[] = [];
+
   constructor(public productService: ProductService) { }
 
   ngOnInit(): void {
-    this.productsSub$ = this.productService.getProducts$().pipe(
-      map((products: Product[]) => new MatTableDataSource(products)),
-      tap((dataSource: MatTableDataSource<Product>) => this.dataSource = dataSource)
-    ).subscribe();
+    this.productsSub$ = this.productService.getProducts$().pipe().subscribe(products => this.products = products);
   }
 
   ngOnDestroy(): void {
     this.productsSub$.unsubscribe();
-  }
-
-  onImageClick(url: string) {
   }
 }
