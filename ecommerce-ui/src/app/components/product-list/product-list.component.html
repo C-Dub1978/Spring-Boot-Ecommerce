@@ -1,12 +1,24 @@
 <div class="main-content">
   <div class="section-content section-content-p30">
     <div class="container-fluid">
-      <div class="row">
+      <nav class="navbar navbar-light bg-light d-flex justify-content-center">
+        <h3 *ngIf="productService.getSelectedCategory$() | async; let category">
+          {{ category | titlecase }}
+        </h3>
+      </nav>
+      <div class="row" *ngIf="products.length > 0; else noProducts">
         <div *ngFor="let product of products" class="col-md-3">
           <div class="product-box">
-            <img src="{{ product.imageUrl }}" alt="{{ product.name }} image" class="img-responsive">
-            <h1>{{ product.name }}</h1>
-            <div class="price">{{ product.unitPrice | currency : 'USD'}}</div>
+            <img
+              src="{{ product.imageUrl }}"
+              alt="{{ product.name }} image"
+              class="img-responsive link-hover"
+              routerLink="/products/{{ product.id }}"
+            />
+            <h1 routerLink="/products/{{ product.id }}" class="link-hover">
+              {{ product.name }}
+            </h1>
+            <div class="price">{{ product.unitPrice | currency: "USD" }}</div>
             <a href="#">
               <button class="btn btn-outline-dark">Add to cart</button>
             </a>
@@ -16,3 +28,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #noProducts>
+  <div class="row alert alert-info">
+    No products found, please update your search criteria and try again
+  </div>
+</ng-template>

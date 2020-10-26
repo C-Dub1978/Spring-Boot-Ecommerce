@@ -1,6 +1,6 @@
 <!-- MENU SIDEBAR-->
 <aside class="menu-sidebar d-none d-lg-block">
-  <div class="logo">
+  <div class="logo" (click)="productService.setSelectedCategory('Books')">
     <a routerLink="#">
       <img
         src="assets/images/nav-logo.png"
@@ -9,30 +9,7 @@
       />
     </a>
   </div>
-  <div class="menu-sidebar-content js-scrollbar1">
-    <nav class="navbar-sidebar">
-      <ul class="list-unstyled navbar-list">
-        <li>
-          <a routerLink="/category/1" routerLinkActive="active-link">Books</a>
-        </li>
-        <li>
-          <a routerLink="/category/2" routerLinkActive="active-link"
-            >Coffee Mugs</a
-          >
-        </li>
-        <li>
-          <a routerLink="/category/3" routerLinkActive="active-link"
-            >Mouse Pads</a
-          >
-        </li>
-        <li>
-          <a routerLink="/category/4" routerLinkActive="active-link"
-            >Luggage Tags</a
-          >
-        </li>
-      </ul>
-    </nav>
-  </div>
+  <app-product-nav-list></app-product-nav-list>
 </aside>
 <!-- END MENU SIDEBAR-->
 
@@ -44,15 +21,7 @@
     <div class="section-content section-content-p30">
       <div class="container-fluid">
         <div class="header-wrap">
-          <form class="form-header" onsubmit="return false;" method="GET">
-            <input
-              class="au-input au-input-xl"
-              type="text"
-              name="search"
-              placeholder="Search for data ..."
-            />
-            <button class="au-btn-submit" type="submit">Search</button>
-          </form>
+          <app-search-bar></app-search-bar>
           <div class="cart-area d-n">
             <a routerLink="#">
               <div class="total">19.22 <span> 2</span></div>

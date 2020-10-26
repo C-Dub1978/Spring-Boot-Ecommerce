@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   paramMapSub$: Subscription;
-  producstSub$: Subscription;
+  productsSub$: Subscription;
   products: Product[] = [];
   currentProductId: number;
 
@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.paramMapSub$ = this.activatedRoute.paramMap.subscribe((params) => {
       this.listProducts();
     });
-    this.producstSub$ = this.productService
+    this.productsSub$ = this.productService
       .getProducts$()
       .subscribe((products: Product[]) => (this.products = products));
   }

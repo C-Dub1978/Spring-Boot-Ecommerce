@@ -1,0 +1,28 @@
+<div class="form-header">
+  <input
+    #searchKeyword
+    class="au-input au-input-xl"
+    type="text"
+    placeholder="Search for data ..."
+    (keyup.enter)="
+      productService.getProductsByKeyword(
+        searchKeyword.value,
+        this.productService.getCurrentCategory()
+      );
+      searchKeyword.value = ''
+    "
+  />
+  <button
+    class="au-btn-submit"
+    type="submit"
+    (click)="
+      productService.getProductsByKeyword(
+        searchKeyword.value,
+        this.productService.getCurrentCategory()
+      );
+      searchKeyword.value = ''
+    "
+  >
+    Search
+  </button>
+</div>

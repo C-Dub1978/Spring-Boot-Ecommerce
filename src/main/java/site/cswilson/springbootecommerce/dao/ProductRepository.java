@@ -3,6 +3,8 @@ package site.cswilson.springbootecommerce.dao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 import site.cswilson.springbootecommerce.entity.Product;
@@ -15,4 +17,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Page and Pageable are automatically created by Spring data REST behind the scenes
     // Any method starting with findBy, readBy, queryBy, will automatically be available at /search/<queryMethodName>
     Page<Product> findByCategoryId(@RequestParam("id") Long id, Pageable page);
+
+    Page<Product> findByProductId(@RequestParam("id") Long id, Pageable page);
+
+    @Query("SELECT p FROM Product p where p.category.id = :id AND p.name LIKE " + "%:keyword%")
+    Page<Product> findByNameContaining(@RequestParam("keyword") String keyword, @RequestParam("id") Long id, Pageable pageable);
 }
