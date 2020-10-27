@@ -20,6 +20,8 @@ export class ProductService {
   // tslint:disable-next-line:variable-name
   private _products = new BehaviorSubject<Product[]>([]);
   // tslint:disable-next-line:variable-name
+  private _productDetail = new BehaviorSubject<Product>(null);
+  // tslint:disable-next-line:variable-name
   private _productCategories = new BehaviorSubject<ProductCategory[]>([]);
   // tslint:disable-next-line:variable-name
   private _selectedCategory = new BehaviorSubject<string>('Books');
@@ -83,18 +85,11 @@ export class ProductService {
   }
 
   private fetchProductDetail(id: number): void {
-    console.log('TYPEOF ID PASSED: ', typeof id);
     this.httpClient
-      .get<GetResponseProducts>(
-        `${this.PRODUCT_API_ENDPOINT}/findByProductId?id=${id}`
-      )
+      .get<Product>(`${this.PRODUCT_API_ENDPOINT}/${id}`)
       .pipe(
-        filter(
-          (res: GetResponseProducts) =>
-            !!res && !!res._embedded && !!res._embedded.products
-        ),
-        map((res: GetResponseProducts) => res._embedded.products),
-        tap((product: Product[]) => this._products.next([...product]))
+        filter((product: Product) => !!product),
+        tap((product: Product) => this._productDetail.next(product))
       )
       .subscribe();
   }
@@ -117,6 +112,10 @@ export class ProductService {
 
   getProductDetails(id: number): void {
     this.fetchProductDetail(id);
+  }
+
+  getProductDetails$(): Observable<Product> {
+    return this._productDetail.asObservable();
   }
 
   getProducts$(): Observable<Product[]> {

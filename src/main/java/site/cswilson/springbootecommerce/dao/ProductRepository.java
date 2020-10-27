@@ -18,8 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Any method starting with findBy, readBy, queryBy, will automatically be available at /search/<queryMethodName>
     Page<Product> findByCategoryId(@RequestParam("id") Long id, Pageable page);
 
-    Page<Product> findByProductId(@RequestParam("id") Long id, Pageable page);
-
     @Query("SELECT p FROM Product p where p.category.id = :id AND p.name LIKE " + "%:keyword%")
     Page<Product> findByNameContaining(@RequestParam("keyword") String keyword, @RequestParam("id") Long id, Pageable pageable);
 }
