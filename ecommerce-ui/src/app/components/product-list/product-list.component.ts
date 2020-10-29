@@ -3,6 +3,7 @@ import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { Product } from '../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
+import { GetResponseProducts } from '../../models/get-response.model';
 
 @Component({
   selector: 'app-product-list',
@@ -13,7 +14,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   paramMapSub$: Subscription;
   productsSub$: Subscription;
   products: Product[] = [];
-  currentProductId: number;
+  previousCategoryId = 1;
+  currentCategoryId: number;
+  currentPage = 0;
+  pageSize = 8;
+  totalPageElements = 0;
+  totalPages = 0;
 
   constructor(
     public productService: ProductService,
@@ -26,16 +32,47 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
     this.productsSub$ = this.productService
       .getProducts$()
-      .subscribe((products: Product[]) => (this.products = products));
+      .subscribe((res: GetResponseProducts) => {
+        if (res) {
+          this.products = res._embedded.products;
+          this.currentPage = res.page.number;
+          this.pageSize = res.page.size;
+          this.totalPageElements = res.page.totalElements;
+          this.totalPages = res.page.totalPages;
+        }
+      });
   }
 
   listProducts(): void {
-    this.currentProductId =
+    this.currentCategoryId =
       +this.activatedRoute.snapshot.paramMap.get('id') || 1;
-    this.productService.getProducts(this.currentProductId);
+
+    // Check to see if the category id has changed from the previous, so we can
+    // reset paginator page number
+    if (this.previousCategoryId !== this.currentCategoryId) {
+      this.currentPage = 1;
+    }
+
+    this.previousCategoryId = this.currentCategoryId;
+
+    this.productService.getProductsPaginate(
+      this.currentPage - 1,
+      this.pageSize,
+      this.currentCategoryId
+    );
   }
 
   ngOnDestroy(): void {
     this.paramMapSub$.unsubscribe();
+  }
+
+  onPageChange(): void {
+    this.currentCategoryId =
+      +this.activatedRoute.snapshot.paramMap.get('id') || 1;
+    this.productService.getProductsPaginate(
+      this.currentPage,
+      this.pageSize,
+      this.currentCategoryId
+    );
   }
 }

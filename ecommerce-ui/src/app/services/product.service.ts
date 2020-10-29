@@ -18,7 +18,7 @@ export class ProductService {
   private PRODUCT_CATEGORY_API_ENDPOINT =
     'http://localhost:8080/api/product-category';
   // tslint:disable-next-line:variable-name
-  private _products = new BehaviorSubject<Product[]>([]);
+  private _products = new BehaviorSubject<GetResponseProducts>(null);
   // tslint:disable-next-line:variable-name
   private _productDetail = new BehaviorSubject<Product>(null);
   // tslint:disable-next-line:variable-name
@@ -41,8 +41,32 @@ export class ProductService {
             !!res._embedded.products &&
             res._embedded.products.length > 0
         ),
-        map((res) => res._embedded.products),
-        tap((products: Product[]) => this._products.next(products))
+        tap((products: GetResponseProducts) => this._products.next(products))
+      )
+      .subscribe();
+  }
+
+  private fetchProductListPaginate(
+    page: number,
+    pageSize: number,
+    id: number
+  ): void {
+    if (!id) {
+      id = 1;
+    }
+    this.httpClient
+      .get<GetResponseProducts>(
+        `${this.PRODUCT_API_ENDPOINT}/search/findByCategoryId?id=${id}&page=${page}&size=${pageSize}`
+      )
+      .pipe(
+        filter(
+          (res) =>
+            !!res &&
+            !!res._embedded &&
+            !!res._embedded.products &&
+            res._embedded.products.length > 0
+        ),
+        tap((products: GetResponseProducts) => this._products.next(products))
       )
       .subscribe();
   }
@@ -56,10 +80,7 @@ export class ProductService {
           CategoryToId[id]
         }`
       )
-      .pipe(
-        map((res) => res._embedded.products),
-        tap((products: Product[]) => this._products.next(products || []))
-      )
+      .pipe(tap((res: GetResponseProducts) => this._products.next(res)))
       .subscribe();
   }
 
@@ -102,6 +123,10 @@ export class ProductService {
     this.fetchProductList(id);
   }
 
+  getProductsPaginate(page: number, pageSize: number, id: number): void {
+    this.fetchProductListPaginate(page, pageSize, id);
+  }
+
   getProductCategories(): void {
     this.fetchProductCategoryList();
   }
@@ -118,7 +143,7 @@ export class ProductService {
     return this._productDetail.asObservable();
   }
 
-  getProducts$(): Observable<Product[]> {
+  getProducts$(): Observable<GetResponseProducts> {
     return this._products.asObservable();
   }
 
